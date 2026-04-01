@@ -82,7 +82,55 @@ git push
 
 # Pull Request instructions
 
+✅ Step 1 — Make sure your branch is pushed 
 
+How to know if you pushed the branch 
+Run this: 
+git branch 
+You should see: 
+* lesson-01-setup 
+main 
+
+If you see it, In your terminal: 
+git push 
+
+(If it’s the first time pushing the branch: 
+git push -u origin lesson-01-setup) 
+
+✅ Step 2 — Go to GitHub 
+Open your repo in browser: 
+👉 https://github.com/eririn318/ctd-lesson1-todo-list 
+
+✅ Step 3 — You will see a banner 
+You’ll usually see something like: 
+“Compare & pull request” 
+👉 Click that button 
+
+✅ Step 4 — Set branches correctly 
+Make sure: 
+base branch: main  
+compare branch: lesson-01-setup  
+
+✅ Step 5 — Add title & description 
+Title: 
+Todo List App - Lesson 01 Setup 
+
+Description: 
+- Built Todo List UI 
+- Cleaned up Vite template 
+- Added basic list items 
+
+✅ Step 6 — Create PR 
+Click: 
+👉 Create pull request 
+
+✅ Step 7 — Copy link 
+Now you will see a URL in browser URL bar: 
+https://github.com/eririn318/ctd-lesson1-todo-list/pull/1 
+
+🧠 Simple explanation 
+Branch = your work  
+PR = request to merge your work into main 
 
 
 # React + Vite
