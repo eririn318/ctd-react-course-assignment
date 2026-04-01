@@ -1,3 +1,90 @@
+# Todo List
+## A simple Todo List app built with React and Vite that displays a list of tasks and helps practice basic React and Git workflow.
+
+# Installation instructions
+✅ Step 1 — Create repo on GitHub 
+Name: todo-list  
+Public  
+❌ No README / .gitignore / license 
+ 
+✅ Step 2 — Clone it 
+cd todo-list 
+git clone https://github.com/eririn318/ctd-lesson1-todo-list.git 
+ 
+✅ Step 3 — Create Vite React app 
+npx create-vite@latest --template react . 
+npm install 
+👉 The . is VERY important (puts files in your repo) 
+
+✅ Step 4 — Run project 
+npm run dev 
+Open: 
+http://localhost:5173 
+
+✅ Step 5 — First commit (main branch) 
+git add . 
+git commit -m "initial vite react setup" 
+git push 
+
+✅ Step 6 — Create new branch 
+git checkout -b lesson-01-setup 
+
+✅ Step 6 —  Publish branch to GitHub 
+git push -u origin lesson-01-setup 
+
+✅ Step 7 — Clean up files 
+App.css 
+delete everything inside  
+index.css 
+delete everything inside  
+
+App.jsx → change to below: 
+
+import './App.css' 
+ 
+function App() { 
+  return ( 
+    <div> 
+      <h1>Todo List</h1> 
+    </div> 
+  ) 
+} 
+ 
+export default App 
+
+✅ Step 8 — Add todos (requirement) 
+Update it : 
+
+import './App.css'
+
+function App() {
+const todoList = [
+  {  id:1, title: "review resources"},
+  {  id:2, title: "take notes"},
+  {  id:3, title: "code out app"},
+]
+
+  return (
+    <>
+      <h1>My Todos</h1>
+      <ul>{todoList.map(todo=><li key={todo.id}>{todo.title}</li>)}</ul>
+    </>
+  )
+}
+
+export default App
+
+
+✅ Step 9 — Commit again 
+git add . 
+git commit -m "setup todo list UI" 
+git push 
+
+# Pull Request instructions
+
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
