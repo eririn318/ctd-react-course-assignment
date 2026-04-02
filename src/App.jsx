@@ -9,10 +9,10 @@ const todoList = [
 ]
 
   return (
-    <>
+    <div>
       <h1>My Todos</h1>
       <ul>{todoList.map(todo=><li key={todo.id}>{todo.title}</li>)}</ul>
-    </>
+    </div>
   )
 }
 
