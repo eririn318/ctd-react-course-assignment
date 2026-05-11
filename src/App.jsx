@@ -12,7 +12,7 @@ function App() {
       title: todoTitle
     }
 
-    setTodoList(previous => ([...previous, newTodo]))
+    setTodoList(previous => ([newTodo, ...previous]))
 
   }
    
