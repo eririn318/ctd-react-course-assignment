@@ -16,7 +16,6 @@ function TodoForm({onAddTodo}) {
       inputRef.current.focus(); // focuses input
     }
 }
-
     return(
         <form onSubmit={handleAddTodo}>
             <label htmlFor="todoTitle">Todo</label>
