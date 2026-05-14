@@ -1,19 +1,3 @@
-// import TodoListItem from "./TodoListItem"
-
-// function TodoList({ todoList }) {
- 
-//   return (
-//     <>
-//       <ul>
-//         {todoList.map((todo) => (
-//              <TodoListItem key={todo.id} todo={todo} />       
-//         ))}
-//       </ul>
-//     </>
-//   );
-// }
-
-// export default TodoList;
 
 import TodoListItem from "./TodoListItem"
 
@@ -22,13 +6,18 @@ function TodoList({ todoList , onCompleteTodo}) {
 
   return (
     <>
-    {filteredTodoList.length === 0 && <p>Add todo above to get started</p>}      
+    {/* {filteredTodoList.length === 0 && <p>Add todo above to get started</p>}   */}
+
+    {/* &&  → shows message OR nothing, but ul always there,even empty ul ❌
+     ? : → shows message OR ul, never both, never empty ul ✅ */}
+  {  filteredTodoList.length === 0 ? <p>Add todo above to get started</p> : 
+  
+  
+    <ul>{filteredTodoList.map((todo) => (//map around not checked box list
+            <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo}/>       
+      ))}
     
-     <ul>{filteredTodoList.map((todo) => (//map around not checked box list
-             <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo}/>       
-        ))}
-      
-      </ul>
+    </ul>}
     </>
   );
 }
