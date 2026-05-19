@@ -1,18 +1,61 @@
 import {useState} from "react"
 import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx"
+import isValidTodoTitle from "../../utils/todoValidation.js"
 
-export default function TodoListItem({todo, onCompleteTodo}){
+export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
 
     const [isEditing, setIsEditing ] = useState(false)// two modes based on isEditing state
 // isEditing = false → shows checkbox + title
 // isEditing = true  → shows text input for editing
+    const [workingTitle, setWorkingTitle] = useState(todo.title)
 
-      return (
+        function handleCancel() {
+        setWorkingTitle(todo.title) //reset to original title
+        setIsEditing(false) //back to view mode (hide input)
+    }
+
+      function handleEdit(event) {
+        setWorkingTitle(event.target.value)
+      }
+
+      function handleUpdate(event) {
+        if(!isEditing) return
+        event.preventDefault()
+        onUpdateTodo({...todo, title:workingTitle}) //copy todo and override title with workingTitle
+      // ex:todo = { id:1, title:"Buy milk", isCompleted:false }
+      // workingTitle = "Buy bread"
+
+      // { ...todo, title: workingTitle }
+      // = {
+      //     id: 1,              // ✅ copied from todo
+      //     title: "Buy bread", // ✅ overridden with workingTitle
+      //     isCompleted: false  // ✅ copied from todo
+      //   }
+
+        setIsEditing(false)
+
+      }
+       return(
         <li>
-          <form>
+          <form onSubmit={handleUpdate}>
           {isEditing 
-          ? (<TextInputWithLabel value={todo.title} /> )// EDIT mode/ shows input with current title
-// user can edit it
+          ? (<>
+          {/* // EDIT mode/ shows input with current title
+              // user can edit it */}
+            <TextInputWithLabel 
+            value={workingTitle} // displays state (connects to state)
+            // value without onChange = frozen input ❌ /value={todo.tile} is connect to app.jsx not changeable, workingTitle -> onChange={handleEdit} changeable to user input 
+            // value + onChange       = working input ✅
+            onChange={handleEdit} // updates state
+            /> 
+            <button type="button" onClick={handleCancel}>Cancel</button>
+            <button type="button" onClick = {handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
+            {/* Pass workingTitle to isValidTodoTitle to disable Save button when input is empty!  */}
+            {/* workingTitle = "Buy milk" → isValid = true  → !true = false  → enabled ✅
+                workingTitle = ""         → isValid = false → !false = true  → disabled ✅
+                workingTitle = "  "       → isValid = false → !false = true  → disabled ✅ */}
+            </>
+          )
           : (
             <>
             {/* connects label to checkbox */}
@@ -36,7 +79,7 @@ export default function TodoListItem({todo, onCompleteTodo}){
          )}
          </form>
          </li>
-  )}
+ )}
 
 
 

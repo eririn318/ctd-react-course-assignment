@@ -9,6 +9,7 @@ function TodoForm({onAddTodo}) {
     const [workingTodoTitle, setWorkingTodoTitle] = useState("")
 
 
+
     function handleAddTodo(event) {
      
         event.preventDefault();
@@ -23,9 +24,11 @@ function TodoForm({onAddTodo}) {
     // .current is where React stores the DOM element after you connect it with ref={inputRef}
     }
 }
+
     return(
         <form onSubmit={handleAddTodo}>
             <TextInputWithLabel   ref={inputRef} value={workingTodoTitle}  onChange={(event) => setWorkingTodoTitle(event.target.value)} elementId="todoTitle" labelText="Todo"  />
+            
             {/* <label htmlFor="todoTitle">Todo</label>
             <input 
             // ref={inputRef} 

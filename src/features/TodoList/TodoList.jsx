@@ -1,7 +1,7 @@
 
 import TodoListItem from "./TodoListItem"
 
-function TodoList({ todoList , onCompleteTodo}) {
+function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
  const filteredTodoList = todoList.filter(todo => !todo.isCompleted)//isCompleted=true/checked list will hidden = not checked box list is displayed.
 
   return (
@@ -14,7 +14,7 @@ function TodoList({ todoList , onCompleteTodo}) {
   
   
     <ul>{filteredTodoList.map((todo) => (//map around not checked box list
-            <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo}/>       
+            <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo}/>       
       ))}
     
     </ul>}
