@@ -1,8 +1,8 @@
 
 import TodoListItem from "./TodoListItem"
 
+// After API → todos stay visible with ✅ checkbox, server stores state
 function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
- const filteredTodoList = todoList.filter(todo => !todo.isCompleted)//isCompleted=true/checked list will hidden = not checked box list is displayed.
 
   return (
     <>
@@ -10,10 +10,10 @@ function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
 
     {/* &&  → shows message OR nothing, but ul always there,even empty ul ❌
      ? : → shows message OR ul, never both, never empty ul ✅ */}
-  {  filteredTodoList.length === 0 ? <p>Add todo above to get started</p> : 
+  {  todoList.length === 0 ? <p>Add todo above to get started</p> : 
   
   
-    <ul>{filteredTodoList.map((todo) => (//map around not checked box list
+    <ul>{todoList.map((todo) => (//map around not checked box list
             <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo}/>       
       ))}
     
@@ -21,6 +21,34 @@ function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
     </>
   );
 }
+
+
+
+
+
+
+
+//!! Before API → filter made sense, completed todos hidden
+// function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
+//  const filteredTodoList = todoList.filter(todo => !todo.isCompleted)//isCompleted=true/checked list will hidden = not checked box list is displayed.
+
+//   return (
+//     <>
+//     {/* {filteredTodoList.length === 0 && <p>Add todo above to get started</p>}   */}
+
+//     {/* &&  → shows message OR nothing, but ul always there,even empty ul ❌
+//      ? : → shows message OR ul, never both, never empty ul ✅ */}
+//   {  filteredTodoList.length === 0 ? <p>Add todo above to get started</p> : 
+  
+  
+//     <ul>{filteredTodoList.map((todo) => (//map around not checked box list
+//             <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo}/>       
+//       ))}
+    
+//     </ul>}
+//     </>
+//   );
+// }
 
 export default TodoList;
 
