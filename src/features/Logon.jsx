@@ -1,5 +1,5 @@
 import {useState} from "react"
-export default function Logon({onSetEmail, onSetToken}) {
+export default function Logon({onSetEmail=()=>{}, onSetToken = () => {}}) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [authError, setAuthError] = useState("")
@@ -33,6 +33,7 @@ export default function Logon({onSetEmail, onSetToken}) {
 
     return(
         <div>
+            
             {authError && <p>{authError}</p>} 
             {/* // form - just runs the function, nothing displays */}
             {/* <form onSubmit={handleSubmit}>  // ← action only!
@@ -55,12 +56,12 @@ export default function Logon({onSetEmail, onSetToken}) {
                     id="password"
                     type="password"
                     value={password}
-                     onChange={(event)=>setPassword(event.target.value)}
+                    onChange={(event)=>setPassword(event.target.value)}
                     required />
                     
                     <button 
                     type="submit" 
-                    disabled={isLoggingOn}>Submit
+                    disabled={isLoggingOn}>{isLoggingOn ?  "Logging in ..." : "Submit"}
                     </button> 
                     {/* disabled=false means disabled off =clickable, when it is true disabled on=unclickable */}
                     {/* user clicks button:→ isLoggingOn(false)-> setIsLoggingOn(true)

@@ -1,6 +1,6 @@
   
   import {useState, useEffect} from "react"
-  import TodoList from "../TodoList/TodoList.jsx"
+  import TodoList from "./TodoList/TodoList.jsx"
   import TodoForm from "./TodoForm.jsx"
 
   export default function TodosPage({token}){
@@ -95,7 +95,11 @@
 try{
 const response = await fetch(`/api/tasks/${id}`, {
     method: "PATCH", 
-    body: JSON.stringify({isCompleted: true}),
+    body: JSON.stringify({
+        title: originalTodo.title,
+        isCompleted: true, 
+        createdAt: originalTodo.createdAt
+    }),
     headers: {"Content-Type": "application/json", "X-CSRF-TOKEN":token},
     credentials:'include'
     })
@@ -133,7 +137,11 @@ const response = await fetch(`/api/tasks/${id}`, {
 
     try{ const response = await fetch(`/api/tasks/${editedTodo.id}`, {
         method: "PATCH",
-        body: JSON.stringify({title: editedTodo.title, isCompleted: editedTodo.isCompleted}),
+        body: JSON.stringify({
+            title: editedTodo.title, 
+            isCompleted: editedTodo.isCompleted, 
+            createdAt : editedTodo.createdAt
+        }),
         headers: {"Content-Type": "application/json", "X-CSRF-TOKEN" :token},
         credentials: 'include'
     })
