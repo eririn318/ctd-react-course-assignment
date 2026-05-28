@@ -31,7 +31,7 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
       //     title: "Buy bread", // ✅ overridden with workingTitle
       //     isCompleted: false  // ✅ copied from todo
       //   }
-
+// console.log("TODO ITEM:", todo)
         setIsEditing(false)
 
       }
