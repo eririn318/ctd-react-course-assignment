@@ -49,12 +49,6 @@ function TodoList({ todoList , onCompleteTodo, onUpdateTodo, dataVersion}) {
   );
 }
 
-
-
-
-
-
-
 //!! Before API → filter made sense, completed todos hidden
 // function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
 //  const filteredTodoList = todoList.filter(todo => !todo.isCompleted)//isCompleted=true/checked list will hidden = not checked box list is displayed.

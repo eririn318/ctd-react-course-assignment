@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import TodoList from "./TodoList/TodoList.jsx";
+import TodoList from "../TodoList/TodoList.jsx";
 import TodoForm from "./TodoForm.jsx";
 import SortBy from "../../shared/SortBy.jsx";
 import useDebounce from "../../utils/useDebounce.js";
@@ -17,7 +17,7 @@ export default function TodosPage({ token }) {
 
   const invalidateCache = useCallback(() => {
       setDataVersion((prev) => prev + 1);
-      console.log("Invalidating memo cache after todo mutation");
+      // console.log("Invalidating memo cache after todo mutation");
   }, []);
 
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
@@ -152,9 +152,6 @@ export default function TodosPage({ token }) {
         credentials: "include",
       });
 
-      const data = await response.json(); 
-      console.log("response status:", response.status); 
-      console.log("response data:", data); 
 
       if (!response.ok) {
         //if  server fails → rollback(back to original) with .map
@@ -280,7 +277,7 @@ export default function TodosPage({ token }) {
         onSortDirectionChange={setSortDirection}
       />
 
-      <FilterInput filterTerm={filterTerm} onFilterChange={setFilterTerm} />
+      <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange} />
       <TodoForm onAddTodo={addTodo} />
       <TodoList
         todoList={todoList}
