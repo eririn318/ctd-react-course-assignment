@@ -21,8 +21,7 @@ export default function Logon({onSetEmail=()=>{}, onSetToken = () => {}}) {
             onSetEmail(data.name)
             onSetToken(data.csrfToken)
         } else {
-            setAuthError(`Error: ${data.name} | ${data.csrfToken}`)
-        }
+            setAuthError(`Authentication failed: ${data?.message}`)        }
         }catch(error){
             setAuthError(`Error: ${error.name} | ${error.message}`)
         }finally{
