@@ -2,19 +2,22 @@ import "./App.css";
 import TodosPage from "./features/Todos/TodosPage.jsx"
 import Header from "./shared/Header.jsx"
 import Logon from "./features/Logon.jsx"
-import {useState} from "react"
+// import {useState} from "react"
+import { useAuth } from "./contexts/AuthContext.jsx";
 
 
 function App() {
-  const [email, setEmail] = useState("")
-  const [token, setToken] = useState("")
+  // const [email, setEmail] = useState("")
+  // const [token, setToken] = useState("")
+   const {token} = useAuth()
+
 
   return (
     <div>
-      <Header token={token} onSetToken={setToken} onSetEmail={setEmail}/>
+      <Header/>
       {token ? 
-      <TodosPage token={token}/> :
-      <Logon onSetEmail={setEmail} onSetToken={setToken}/>}
+      <TodosPage/> :
+      <Logon/>}
     </div>
   
   )
@@ -30,7 +33,4 @@ export default App;
 // after click:
 // isCompleted: true  → !true  = false → hidden from list ✅
 
-// ! flips it:
-// false → !false = true  → display
-// true  → !true  = false → hide
-// click makes it true, then ! flips it to false so filter removes it! 
+
