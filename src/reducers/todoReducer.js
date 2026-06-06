@@ -103,8 +103,8 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.FETCH_ERROR:
       return {
         ...state,
-        filterError: action.payload.isFilterError ? action.payload.message : "", //payload = filter error message/isFilterError: true→ filtering went wrong → show filterError/false → filterError stays empty
-        error: action.payload.isFilterError ? action.payload.message : "", // payload = error message/isFilterError: false→ fetching went wrong  → show error/true → error stays empty
+        filterError: action.payload.isFilterError ? action.payload.message : "", //payload = filter error message/isFilterError: true→ filtering went wrong → show filterError/false → filterError stays empty/// If true -> set message. If false -> clear it.
+        error: action.payload.isFilterError ? "" :action.payload.message, // payload = error message/isFilterError: false→ fetching went wrong  → show error/true → error stays empty // If true -> clear it. If false -> set message.
         isTodoListLoading: false ,
       };
     //ADD TO DO
