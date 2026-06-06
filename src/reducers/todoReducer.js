@@ -204,7 +204,6 @@ export function todoReducer(state, action) {
       return {
         ...state,
             filterTerm: action.payload // "" user types different things each time → action.payload //action.payload = value(whatever user types)
-
       };
 
     //CLEAR ERROR
