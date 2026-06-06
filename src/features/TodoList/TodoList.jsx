@@ -1,19 +1,46 @@
 
 import TodoListItem from "./TodoListItem"
-
+import { useMemo } from "react"
 // After API → todos stay visible with ✅ checkbox, server stores state
-function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
+function TodoList({ todoList , onCompleteTodo, onUpdateTodo, dataVersion}) {
+  const filteredTodoList = useMemo(() => {//Optimize TodoList with useMemo
+    // console.log (`Recalculating filtered todos (v${dataVersion})`)
+    // console.log("todoList:", todoList) 
+    // console.log("filtered:", todoList.filter(todo => !todo.isCompleted)) 
+    return {
+      version:dataVersion,
+      todos:todoList.filter(todo => !todo.isCompleted) //isCompleted=true/checked list will hidden = not checked box list is displayed.
+    }
+  },[todoList, dataVersion])
+// mutation happens (add/complete/update)
+//         ↓
+// invalidateCache() → dataVersion goes up (v1 → v2)
+//         ↓
+// useMemo sees dependency changed
+//         ↓
+// recalculates filteredTodoList
+//         ↓
+// UI updates with fresh data ✅
 
+// useMemo saves the result so it doesn't recalculate every time:
+// first time   → calculates filter → saves result on sticky note
+// second time  → just reads sticky note → no recalculating! ⚡
+//When data mutates, the sticky note is outdated → needs to recalculate:
+// sticky note says: ["study", "workout"]   ← saved result
+// you add new todo "cook dinner"           ← mutation!
+// sticky note is now WRONG ❌
+// invalidateCache() → throw away old note → recalculate ✅
+// sticky note now says: ["study", "workout", "cook dinner"] ✅
   return (
     <>
     {/* {filteredTodoList.length === 0 && <p>Add todo above to get started</p>}   */}
 
     {/* &&  → shows message OR nothing, but ul always there,even empty ul ❌
      ? : → shows message OR ul, never both, never empty ul ✅ */}
-  {  todoList.length === 0 ? <p>Add todo above to get started</p> : 
+  {  filteredTodoList.todos.length === 0 ? <p>Add todo above to get started</p> : 
   
   
-    <ul>{todoList.map((todo) => (//map around not checked box list
+    <ul>{filteredTodoList.todos.map((todo) => (//map around not checked box list
             <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo}/>       
       ))}
     
@@ -21,12 +48,6 @@ function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {
     </>
   );
 }
-
-
-
-
-
-
 
 //!! Before API → filter made sense, completed todos hidden
 // function TodoList({ todoList , onCompleteTodo, onUpdateTodo}) {

@@ -1,6 +1,6 @@
 import {useState} from "react"
-import TextInputWithLabel from "../../../shared/TextInputWithLabel.jsx"
-import isValidTodoTitle from "../../../utils/todoValidation.js"
+import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx"
+import isValidTodoTitle from "../../utils/todoValidation.js"
 
 export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
 
@@ -31,7 +31,7 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
       //     title: "Buy bread", // ✅ overridden with workingTitle
       //     isCompleted: false  // ✅ copied from todo
       //   }
-
+// console.log("TODO ITEM:", todo)
         setIsEditing(false)
 
       }
