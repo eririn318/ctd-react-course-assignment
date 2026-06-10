@@ -9,8 +9,9 @@ function TodoList({ todoList , onCompleteTodo, onUpdateTodo, dataVersion}) {
     // console.log("filtered:", todoList.filter(todo => !todo.isCompleted)) 
     return {
       version:dataVersion,
-      todos:todoList.filter(todo => !todo.isCompleted) //isCompleted=true/checked list will hidden = not checked box list is displayed.
-    }
+        // todos:todoList.filter(todo => !todo.isCompleted) //isCompleted=true/checked list will hidden = not checked box list is displayed.
+    todos: todoList 
+      }
   },[todoList, dataVersion])
 // mutation happens (add/complete/update)
 //         ↓

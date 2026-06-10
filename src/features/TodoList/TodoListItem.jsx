@@ -21,7 +21,9 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
       function handleUpdate(event) {
         if(!isEditing) return
         event.preventDefault()
-        onUpdateTodo({...todo, title:workingTitle}) //copy todo and override title with workingTitle
+        const trimmedTitle = workingTitle.trim()
+        if (!isValidTodoTitle(trimmedTitle)) return;
+        onUpdateTodo({...todo, title:trimmedTitle}) //copy todo and override title with trimmedTitle
       // ex:todo = { id:1, title:"Buy milk", isCompleted:false }
       // workingTitle = "Buy bread"
 
@@ -59,7 +61,8 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
           : (
             <>
             {/* connects label to checkbox */}
-          <label htmlFor={`checkbox${todo.id}`}> 
+          {/* <label htmlFor={`checkbox${todo.id}`}> </label> */}
+           <label htmlFor={`checkbox${todo.id}`}> </label>
             {/* VIEW mode/checkbox + title */}
             <input 
               type="checkbox" 
@@ -68,9 +71,8 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
               // todo.isCompleted = false → checkbox is unchecked ☐
               // todo.isCompleted = true  → checkbox is checked   ☑
               onChange = {()=>onCompleteTodo(todo.id)}//complete THIS specific todo-->ex: completeTodo(2) → finds todo where todo.id === 2 → marks it complete
-            >
-            </input>
-          </label>
+            />
+          
          
         {/* click title → switches to edit mode */}
         <span onClick={() => setIsEditing(true)}>{todo.title}</span>
@@ -79,9 +81,9 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
          )}
          </form>
          </li>
- )}
-
-
+         
+  )
+}
 
 {/* <input type="checkbox" checked={todo.isCompleted} />  // ✅ checkbox
 <input type="text"     value={workingTodoTitle} />     // ✅ text input */}
@@ -101,4 +103,3 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
 // // checkbox
 // checked={todo.isCompleted}                       // displays state
 // onChange={() => onCompleteTodo(todo.id)}         // updates state
-   
