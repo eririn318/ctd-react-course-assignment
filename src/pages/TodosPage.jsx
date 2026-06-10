@@ -1,15 +1,17 @@
 import { useEffect, useReducer } from "react";
-import TodoList from "../TodoList/TodoList.jsx";
-import TodoForm from "./TodoForm.jsx";
-import SortBy from "../../shared/SortBy.jsx";
-import useDebounce from "../../utils/useDebounce.js";
-import FilterInput from "../../shared/FilterInput.jsx";
+import TodoList from "../features/TodoList/TodoList.jsx";
+import TodoForm from "../features/Todos/TodoForm.jsx";
+import SortBy from "../shared/SortBy.jsx";
+import useDebounce from "../utils/useDebounce.js";
+import FilterInput from "../shared/FilterInput.jsx";
 import {
   TODO_ACTIONS,
   initialTodoState,
   todoReducer,
-} from "../../reducers/todoReducer.js";
-import { useAuth } from "../../contexts/AuthContext";
+} from "../reducers/todoReducer.js";
+import { useAuth } from "../contexts/AuthContext.jsx";
+import {useSearchParams} from "react-router"
+import StatusFilter from "../shared/StatusFilter.jsx"
 
 export default function TodosPage() {
   // const [todoList, setTodoList] = useState([]);
@@ -20,6 +22,7 @@ export default function TodosPage() {
   // const [filterTerm, setFilterTerm] = useState("");
   // const [dataVersion, setDataVersion] = useState(0);
   // const [filterError, setFilterError] = useState("")
+  const [searchParams] = useSearchParams()
   const [state, dispatch] = useReducer(todoReducer, initialTodoState); // (function 1st, initial state 2nd)
   const {
     todoList,
@@ -39,6 +42,8 @@ export default function TodosPage() {
   // }, []);
 
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
+  const statusFilter = searchParams.get('status') ||"all" //Reads choice from URL /You need it in StatusFilter so the dropdown menu knows which option to highlight. You need it in TodosPage so your JavaScript code knows whether to show all items, hide completed items, or show active items!
+
 
   // ****FilterInput now uses dispatch directly:
   // ✅ dispatch directly in JSX
@@ -474,6 +479,8 @@ export default function TodosPage() {
         }
       />
 
+      <StatusFilter />
+
       {/* <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange} /> */}
       <FilterInput
         filterTerm={filterTerm}
@@ -493,6 +500,7 @@ export default function TodosPage() {
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
         dataVersion={dataVersion}
+        statusFilter={statusFilter}
       />
     </>
   );
