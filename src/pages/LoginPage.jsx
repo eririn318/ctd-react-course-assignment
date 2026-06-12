@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react"
-import {useNavigate, useLocation} from "react-router-dom"
+import {useNavigate, useLocation} from "react-router"
 import {useAuth} from "../contexts/AuthContext.jsx"
 // export default function Logon({onSetEmail=()=>{}, onSetToken = () => {}}) {
     export default function LoginPage() {
@@ -73,33 +73,45 @@ import {useAuth} from "../contexts/AuthContext.jsx"
     }
 
     return(
-        <div>
-            {authError && <p>{authError}</p>} 
-            {/* // form - just runs the function, nothing displays */}
+<div className="max-w-l mx-auto mt-8 p-6 bg-white border border-slate-200 rounded-xl shadow-sm transition-all duration-300 ease-out opacity-100">            
+    {authError && 
+    <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm font-medium mb-4 transition-all">
+        {authError}
+    </div>} 
+           <h2 className="text-xl font-bold text-slate-900 mb-5">Sign In</h2>
+           
+           {/* // form - just runs the function, nothing displays */}
             {/* <form onSubmit={handleSubmit}>  // ← action only!
             // authError - displays the RESULT of what handleSubmit did
             {authError && <p>{authError}</p>}  // ← shows text on screen! */}
             {/* handleSubmit runs → success → authError stays empty → nothing shows */}
             {/* handleSubmit runs → fails → setAuthError("failed!") → authError shows error message */}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email" >Email</label>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="flex flex-col gap-1.5">
+                <label 
+                htmlFor="email"
+                className="text-xs font-bold uppercase tracking-wider text-slate-500 "
+                 >Email</label>
                     <input 
+                    className="h-11 px-3 border border-slate-200 rounded-lg text-slate-900 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all duration-200"
                     id="email"
                     type="email"
                     value={email}
                     onChange={(event)=>setEmail(event.target.value)}
                     required />
-                    
-                    
-                    <label htmlFor="password">Password</label>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                    <label htmlFor="password" className="text-xs font-bold uppercase tracking-wider text-slate-500">Password</label>
                     <input
+className="h-11 px-3 border border-slate-200 rounded-lg text-slate-900 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all duration-200"
                     id="password"
                     type="password"
                     value={password}
                     onChange={(event)=>setPassword(event.target.value)}
                     required />
-                    
+                    </div>
                     <button 
+                    className="w-full h-11 flex items-center justify-center font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition-colors duration-200 mt-2"
                     type="submit" 
                     disabled={isLoggingOn}>{isLoggingOn ?  "Logging in ..." : "Submit"}
                     </button> 

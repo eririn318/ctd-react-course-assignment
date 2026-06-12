@@ -26,7 +26,7 @@ function TodoForm({onAddTodo}) {
 }
 
     return(
-        <form onSubmit={handleAddTodo}>
+        <form onSubmit={handleAddTodo} className="w-full flex flex-col sm:flex-row gap-3">
             <TextInputWithLabel   ref={inputRef} value={workingTodoTitle}  onChange={(event) => setWorkingTodoTitle(event.target.value)} elementId="todoTitle" labelText="Todo"  />
             
             {/* <label htmlFor="todoTitle">Todo</label>
@@ -41,6 +41,7 @@ function TodoForm({onAddTodo}) {
             required/> */}
             <button  
             type="submit" 
+            className="h-9 px-5 font-semibold text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dynamic-touch-target"
             disabled={!isValidTodoTitle(workingTodoTitle)}
             >
                 Add Todo

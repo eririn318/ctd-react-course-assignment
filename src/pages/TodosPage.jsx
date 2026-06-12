@@ -392,9 +392,9 @@ export default function TodosPage() {
   return (
     <>
       {error && (
-        <div>
-          <p>{error}</p>
-          <button
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-sm animate-fade-in">
+          <p className="text-sm font-semibold text-red-800">{error}</p>
+          <button className="inline-flex items-center justify-center bg-white text-red-700 border border-red-300 h-11 px-4 rounded-md font-medium text-sm shadow-sm hover:bg-red-100 active:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
             onClick={() =>
               // setError("")
               dispatch({
@@ -409,10 +409,11 @@ export default function TodosPage() {
       )}
 
       {filterError && (
-        <div>
-          <p>{filterError}</p>
-
-          <button
+        <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6 flex flex-col gap-3 shadow-sm">
+          <p className="text-sm font-semibold text-amber-900">{filterError}</p>
+        <div className="flex flex-wrap gap-2.5">
+          <button 
+          className="inline-flex items-center justify-center bg-white text-amber-800 border border-amber-300 h-9 px-3 rounded-md font-medium text-xs shadow-sm hover:bg-amber-100"
             onClick={() =>
               //CLEAR_ERROR
               // setFilterError('')
@@ -424,7 +425,7 @@ export default function TodosPage() {
           >
             Clear Filter Error
           </button>
-          <button
+          <button className="inline-flex items-center justify-center bg-amber-600 text-white h-9 px-3 rounded-md font-medium text-xs shadow-sm hover:bg-amber-700"
             onClick={() => {
               //RESET_FILTERS
               // setFilterTerm('') //Clears the filter term:
@@ -439,19 +440,14 @@ export default function TodosPage() {
           >
             Reset Filters
           </button>
+          </div>
         </div>
       )}
 
-      {isTodoListLoading && <p>Loading</p>}
-      {/* // default
-                    isTodoListLoading = false
-                    {false && <p>Loading...</p>}  // → nothing displays
-
-                    when it clicks default false becomes true
-
-                    // fetchTodos starts
-                    setIsTodoListLoading(true)
-                    {true && <p>Loading...</p>}   // → "Loading..." displays! ✓ */}
+    <div className="space-y-6">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
+    <div className="w-full sm:w-auto"><StatusFilter /></div>
+    <div className="w-full sm:w-auto">
       <SortBy
         sortBy={sortBy}
         sortDirection={sortDirection}
@@ -478,30 +474,35 @@ export default function TodosPage() {
           })
         }
       />
-
-      <StatusFilter />
-
-      {/* <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange} /> */}
-      <FilterInput
-        filterTerm={filterTerm}
-        onFilterChange={(
-          value, //SET_FILTER
-        ) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_FILTER,
-            payload: value, //(new value===whatever user types)
-          })
-        }
-      />
+      </div>
+      </div>
 
       <TodoForm onAddTodo={addTodo} />
-      <TodoList
+
+      {isTodoListLoading ? (
+        <div className="text-center py-10 text-slate-400 font-medium text-sm animate-pulse">
+          <span className="block text-3xl mb-2">⏳</span>
+          <p className="text-sm font-medium">Loading</p>
+          </div>) 
+      // default
+      // isTodoListLoading = false
+      // {false && <p>Loading...</p>}  // → nothing displays
+
+      // when it clicks default false becomes true
+
+      // fetchTodos starts
+      // setIsTodoListLoading(true)
+      // {true && <p>Loading...</p>}   // → "Loading..." displays! ✓
+      :( <TodoList
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
         dataVersion={dataVersion}
         statusFilter={statusFilter}
       />
+      )}
+      </div>
+
     </>
   );
 }

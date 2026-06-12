@@ -1,7 +1,7 @@
 export default function FilterInput({filterTerm, onFilterChange}) {
 
     return(
-        <div>
+        <div >
         <label htmlFor='filterInput'>Search todos:</label>
         <input
         id='filterInput'

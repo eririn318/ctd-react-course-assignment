@@ -1,4 +1,4 @@
-import {useSearchParams} from "react-router-dom"
+import {useSearchParams} from "react-router"
 
 function StatusFilter() {
     // 1. You hook into the browser's URL address bar
@@ -28,13 +28,15 @@ const currentStatus = searchParams.get("status") || "all"
     }
 
     return(
-        <div>
+    <div className="flex items-center gap-2">
             <label htmlFor="statusFilter">Show</label>
             <select
                 id="statusFilter"
                 value={currentStatus}
                 onChange={(e)=> handleStatusChange(e.target.value)} //when clicked of value, choose value from <option value=""
-                >
+                
+             className="h-9 px-3 text-xs font-semibold bg-white border border-slate-200 text-slate-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-pointer"
+>
                     <option value="all">All Todos</option>
                     <option value="active">Active Todos</option>
                     <option value="completed">Completed Todos</option>

@@ -70,10 +70,10 @@ const getEmptyMessage = () => { //use if filteredTodoList.todos.length === 0 //e
     {/* &&  → shows message OR nothing, but ul always there,even empty ul ❌
      ? : → shows message OR ul, never both, never empty ul ✅ */}
   {filteredTodoList.todos.length === 0 ? (
-  <p>{getEmptyMessage()}</p>) : (
+  <p >{getEmptyMessage()}</p>) : (
   
   
-    <ul>{filteredTodoList.todos.map((todo) => (//map around not checked box list
+    <ul >{filteredTodoList.todos.map((todo) => (//map around not checked box list
             <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo} onUpdateTodo={onUpdateTodo}/>       
       ))}
     

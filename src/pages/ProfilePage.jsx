@@ -29,9 +29,10 @@ export default function ProfilePage() {
                 throw new Error("Failed to fetch statistics")
               }
 
-              const data = await response.json()
+              const result = await response.json()
             
-                const todos = data.tasks
+              // If result is a direct array, use it. If it's an object with .tasks, use that!
+                const todos = Array.isArray(result) ? result : (result.tasks || [])
 
               //calculate statistics
               const total = todos.length
@@ -49,19 +50,28 @@ export default function ProfilePage() {
         if (token) fetchStats()  //if token is true, fetch statistics data
     },[token])
 
-    if (loading) return <p>Loading</p> //if loading, display Loading
+    if (loading) 
+    return (
+    <div className="text-center py-12 text-slate-400 animate-pulse">
+                <span className="block text-3xl mb-2">⏳</span>
+                <p className="text-sm font-medium">Loading...</p>
+            </div>   //if loading, display Loading
+            ) 
+          
     if (error) return <p style={{ color: "red" }}>Error: {error}</p> //if error, display error
 
     return(
         <div style={{ padding: "2rem" }}>
-            <h1>User Profile</h1>
-            <section>
+            <div className="bg-white w-50 border border-slate-200 rounded-2xl px-5 py-4 shadow-sm">
+            <h1 className="text-2xl font-black text-slate-700">User Profile</h1>
+            </div>
+            <section className="text-sm text-slate-600 space-y-0.5 mt-5">
 {/* Optional chaining (?.)
 user?.name
 Means:
 “If user exists, get name. If not, don’t crash.”
 So:
-user = null → returns undefined (no crash)
+user = null → returns undefined (no crash)a
 user = {name:"John"} → returns "John" */}
 
 
@@ -71,12 +81,14 @@ user?.name || "User"
 Means:
 “If name is missing → show "User"” */}
 
-                <p>Username: {user?.name || "User"}</p>
-                <p>Email: {user?.email || "no email"}</p>
+                <p><strong>Username: </strong> {user?.name || "User"}</p>
+                <p><strong>Email: </strong>{user?.email || "no email"}</p>
             </section>
 
+            <hr className="border-slate-700 mt-6 mb-18 " />
+
             <section style={{ marginTop: "2rem" }}>
-                <h2>Your Todo Statistics</h2>
+                <h2 className="text-l font-bold uppercase tracking-wider text-slate-700 mb-5">Your Todo Statistics</h2>
                 <div style={{ display: "flex", gap: "1rem" }}>
                     <div style={statBox}>
                     <h3>{todoStats.total}</h3>

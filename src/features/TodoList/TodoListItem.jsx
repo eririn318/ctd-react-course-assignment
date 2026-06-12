@@ -2,6 +2,7 @@ import {useState} from "react"
 import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx"
 import isValidTodoTitle from "../../utils/todoValidation.js"
 
+
 export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
 
     const [isEditing, setIsEditing ] = useState(false)// two modes based on isEditing state
@@ -37,24 +38,34 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
         setIsEditing(false)
       }
        return(
-        <li>
-          <form onSubmit={handleUpdate}>
+        <li >
+          <form  onSubmit={handleUpdate}>
           {isEditing 
           ? (<>
           {/* // EDIT mode/ shows input with current title
               // user can edit it */}
             <TextInputWithLabel 
+           
             value={workingTitle} // displays state (connects to state)
             // value without onChange = frozen input ❌ /value={todo.tile} is connect to app.jsx not changeable, workingTitle -> onChange={handleEdit} changeable to user input 
             // value + onChange       = working input ✅
             onChange={handleEdit} // updates state
             /> 
-            <button type="button" onClick={handleCancel}>Cancel</button>
-            <button type="button" onClick = {handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
+
+         
+            <button 
+            className="h-9 px-3 text-xs font-bold ml-5 text-slate-500 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl shadow-sm transition-colors cursor-pointer"
+            type="button" onClick={handleCancel}>
+            Cancel</button>
+            <button 
+            className="h-9 px-4 text-xs font-bold ml-1 text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:hover:bg-indigo-600 rounded-xl shadow-sm transition-colors cursor-pointer"
+            type="button" onClick = {handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>
+            Update</button>
             {/* Pass workingTitle to isValidTodoTitle to disable Save button when input is empty!  */}
             {/* workingTitle = "Buy milk" → isValid = true  → !true = false  → enabled ✅
                 workingTitle = ""         → isValid = false → !false = true  → disabled ✅
                 workingTitle = "  "       → isValid = false → !false = true  → disabled ✅ */}
+          
             </>
           )
           : (
@@ -73,7 +84,7 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
             />
           
         {/* click title → switches to edit mode */}
-        <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+        <span  onClick={() => setIsEditing(true)}>{todo.title}</span>
      
          </>
          )}
