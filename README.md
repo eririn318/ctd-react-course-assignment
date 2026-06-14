@@ -1,151 +1,123 @@
-# Todo List
-## A simple Todo List app built with React and Vite that displays a list of tasks and helps practice basic React and Git workflow.
+# ⚡ Todo Workspace
 
-# Installation instructions
-✅ Step 1 — Create repo on GitHub 
-Name: todo-list  
-Public  
-❌ No README / .gitignore / license 
- 
-✅ Step 2 — Clone it 
-cd todo-list 
-git clone https://github.com/eririn318/ctd-lesson1-todo-list.git 
- 
-✅ Step 3 — Create Vite React app 
-npx create-vite@latest --template react . 
-npm install 
-👉 The . is VERY important (puts files in your repo) 
+A full-stack Todo application built with React and Vite. Features user authentication, real-time filtering, sorting, and optimistic UI updates for a seamless user experience.
 
-✅ Step 4 — Run project 
-npm run dev 
-Open: 
-http://localhost:5173 
+---
 
-✅ Step 5 — First commit (main branch) 
-git add . 
-git commit -m "initial vite react setup" 
-git push 
+## 🔗 Live Demo
 
-✅ Step 6 — Create new branch 
-git checkout -b lesson-01-setup 
+> Coming soon — deployment in progress
 
-✅ Step 6 —  Publish branch to GitHub 
-git push -u origin lesson-01-setup 
+---
 
-✅ Step 7 — Clean up files 
-App.css 
-delete everything inside  
-index.css 
-delete everything inside  
+## ✨ Features
 
-App.jsx → change to below: 
+- **User Authentication** — Secure login and logout with session-based auth and CSRF protection
+- **Add Todos** — Create new todos with input validation and sanitization
+- **Complete Todos** — Mark todos as complete or active with optimistic UI updates
+- **Edit Todos** — Inline editing with instant UI feedback and server sync
+- **Filter by Status** — Filter todos by All, Active, or Completed via URL params
+- **Search Todos** — Debounced search input to filter todos by title
+- **Sort Todos** — Sort by creation date or title, ascending or descending
+- **Error Handling** — Rollback on failed requests with user-facing error messages
+- **Responsive Design** — Mobile-friendly layout using Tailwind CSS
 
-import './App.css' 
- 
-function App() { 
-  return ( 
-    <div> 
-      <h1>Todo List</h1> 
-    </div> 
-  ) 
-} 
- 
-export default App 
+---
 
-✅ Step 8 — Add todos (requirement) 
-Update it : 
+## 🛠 Technologies Used
 
-import './App.css'
+**Frontend**
+- React 19
+- React Router v7
+- Tailwind CSS v4
+- DOMPurify (input sanitization)
+- Vite v8
 
-function App() {
-const todoList = [
-  {  id:1, title: "review resources"},
-  {  id:2, title: "take notes"},
-  {  id:3, title: "code out app"},
-]
+**Dev Tools**
+- ESLint
+- GitHub (version control)
 
-  return (
-    <>
-      <h1>My Todos</h1>
-      <ul>{todoList.map(todo=><li key={todo.id}>{todo.title}</li>)}</ul>
-    </>
-  )
-}
+---
 
-export default App
+## 📸 Screenshots
 
+> Screenshots coming soon
 
-✅ Step 9 — Commit again 
-git add . 
-git commit -m "setup todo list UI" 
-git push 
+---
 
-# Pull Request instructions
+## 🚀 Getting Started
 
-✅ Step 1 — Make sure your branch is pushed 
+### Prerequisites
 
-How to know if you pushed the branch 
-Run this: 
-git branch 
-You should see: 
-* lesson-01-setup 
-main 
+- Node.js v18+
+- npm v9+
 
-If you see it, In your terminal: 
-git push 
+### Installation
 
-(If it’s the first time pushing the branch: 
-git push -u origin lesson-01-setup) 
+1. Clone the repository
+```bash
+git clone https://github.com/eririn318/ctd-lesson1-todo-list.git
+cd ctd-lesson1-todo-list
+```
 
-✅ Step 2 — Go to GitHub 
-Open your repo in browser: 
-👉 https://github.com/eririn318/ctd-lesson1-todo-list 
+2. Install dependencies
+```bash
+npm install
+```
 
-✅ Step 3 — You will see a banner 
-You’ll usually see something like: 
-“Compare & pull request” 
-👉 Click that button 
+3. Start the development server
+```bash
+npm run dev
+```
 
-✅ Step 4 — Set branches correctly 
-Make sure: 
-base branch: main  
-compare branch: lesson-01-setup  
+4. Open your browser at `http://localhost:3001`
 
-✅ Step 5 — Add title & description 
-Title: 
-Todo List App - Lesson 01 Setup 
+---
 
-Description: 
-- Built Todo List UI 
-- Cleaned up Vite template 
-- Added basic list items 
+## 📜 Available Scripts
 
-✅ Step 6 — Create PR 
-Click: 
-👉 Create pull request 
+| Script | Description |
+|---|---|
+| `npm run dev` | Starts the Vite development server with HMR |
+| `npm run build` | Builds the app for production |
+| `npm run preview` | Previews the production build locally |
+| `npm run lint` | Runs ESLint to check for code issues |
 
-✅ Step 7 — Copy link 
-Now you will see a URL in browser URL bar: 
-https://github.com/eririn318/ctd-lesson1-todo-list/pull/1 
+---
 
-🧠 Simple explanation 
-Branch = your work  
-PR = request to merge your work into main 
+## 🎨 Design Decisions
 
+**Tailwind CSS v4** was chosen for utility-first styling, enabling rapid and consistent UI development without writing custom CSS files.
 
-# React + Vite
+**Optimistic Updates** were implemented for add, complete, and edit operations to give users instant feedback while the server processes requests in the background. Failed requests automatically roll back to the previous state.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**URL-based filtering** using React Router's `useSearchParams` allows users to bookmark and share filtered views of their todo list.
 
-Currently, two official plugins are available:
+**`useReducer`** was chosen over multiple `useState` calls to centralize state management logic, making the codebase easier to maintain and debug as complexity grew.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**DOMPurify** was used for input sanitization to prevent XSS attacks before saving user input.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🔮 Future Improvements
 
-## Expanding the ESLint configuration
+- Deploy with a live demo link
+- Add due dates and priority levels to todos
+- Drag and drop reordering
+- Dark mode toggle
+- TypeScript migration for type safety
+- Unit tests with Vitest and React Testing Library
+- Delete button for todos list 
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👤 Contact
+
+- GitHub: [@eririn318](https://github.com/eririn318)
+- Portfolio: Coming soon

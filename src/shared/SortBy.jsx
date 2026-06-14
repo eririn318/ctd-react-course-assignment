@@ -1,3 +1,4 @@
+// Controls sort field (creationDate/title) and sort direction (asc/desc)
 export default function SortBy({
     sortBy, 
     sortDirection, 

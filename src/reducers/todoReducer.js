@@ -34,11 +34,9 @@ export const initialTodoState = {
   filterError: "",
 };
 
-
 // state  = React passes current state automatically ✅
 // action = React passes your dispatch object automatically ✅
 export function todoReducer(state, action) {
-
   switch (action.type) {
     // rule: setIsTodoListLoading(true) -> isTodoListLoading: true
     case TODO_ACTIONS.FETCH_START: //action.type===TODO_ACTIONS.FETCH_START?
@@ -49,41 +47,37 @@ export function todoReducer(state, action) {
         filterError: "",
       };
 
-// ...state means:
-// javascript// current state has ALL these:
-// state = {
-//     todoList: [...],        // ← keep! don't change
-//     isTodoListLoading: false, // ← will be overwritten
-//     error: "old error",     // ← will be overwritten
-//     filterError: "old",     // ← will be overwritten
-//     sortBy: "creationDate", // ← keep! don't change
-//     sortDirection: "desc",  // ← keep! don't change
-//     filterTerm: "",         // ← keep! don't change
-//     dataVersion: 0,         // ← keep! don't change
-// }
+    // ...state means:
+    // javascript// current state has ALL these:
+    // state = {
+    //     todoList: [...],        // ← keep! don't change
+    //     isTodoListLoading: false, // ← will be overwritten
+    //     error: "old error",     // ← will be overwritten
+    //     filterError: "old",     // ← will be overwritten
+    //     sortBy: "creationDate", // ← keep! don't change
+    //     sortDirection: "desc",  // ← keep! don't change
+    //     filterTerm: "",         // ← keep! don't change
+    //     dataVersion: 0,         // ← keep! don't change
+    // }
 
-// // ...state spreads ALL of them
-// // then only OVERWRITE the ones you specify!
-// return {
-//     ...state,                 // ← copy everything
-//     isTodoListLoading: true,  // ← overwrite this one
-//     error: "",                // ← overwrite this one
-//     filterError: "",          // ← overwrite this one
-// }
+    // // ...state spreads ALL of them
+    // // then only OVERWRITE the ones you specify!
+    // return {
+    //     ...state,                 // ← copy everything
+    //     isTodoListLoading: true,  // ← overwrite this one
+    //     error: "",                // ← overwrite this one
+    //     filterError: "",          // ← overwrite this one
+    // }
 
-// Think of it like:
-// ...state = copy everything from old state 📋
-// then override only what changed:
+    // Think of it like:
+    // ...state = copy everything from old state 📋
+    // then override only what changed:
 
-// isTodoListLoading: true  ← changed! ✅
-// error: ""                ← changed! ✅
-// filterError: ""          ← changed! ✅
-// todoList: [...]          ← same! kept from ...state ✅
-// sortBy: "creationDate"   ← same! kept from ...state ✅
-
-
-
-
+    // isTodoListLoading: true  ← changed! ✅
+    // error: ""                ← changed! ✅
+    // filterError: ""          ← changed! ✅
+    // todoList: [...]          ← same! kept from ...state ✅
+    // sortBy: "creationDate"   ← same! kept from ...state ✅
 
     //FETCH
     // rule:
@@ -104,59 +98,73 @@ export function todoReducer(state, action) {
       return {
         ...state,
         filterError: action.payload.isFilterError ? action.payload.message : "", //payload = filter error message/isFilterError: true→ filtering went wrong → show filterError/false → filterError stays empty/// If true -> set message. If false -> clear it.
-        error: action.payload.isFilterError ? "" :action.payload.message, // payload = error message/isFilterError: false→ fetching went wrong  → show error/true → error stays empty // If true -> clear it. If false -> set message.
-        isTodoListLoading: false ,
+        error: action.payload.isFilterError ? "" : action.payload.message, // payload = error message/isFilterError: false→ fetching went wrong  → show error/true → error stays empty // If true -> clear it. If false -> set message.
+        isTodoListLoading: false,
       };
+
     //ADD TO DO
     //  setTodoList((previous) => [newTodo, ...previous])
     case TODO_ACTIONS.ADD_TODO_START:
       return {
         ...state,
-        todoList: [action.payload, ...state.todoList] // payload = newTodo
+        todoList: [action.payload, ...state.todoList], // payload = newTodo
       };
+
     // setTodoList((previous) => previous.map((todo) => (todo.id === newTodo.id ? data : todo)),);
     case TODO_ACTIONS.ADD_TODO_SUCCESS: //tempId is temporary id is  id: Date.now(),-->server did not create id yet, so fake item I create immediately in UI.
       return {
         ...state,
-        todoList: state.todoList.map((todo)=> (todo.id===action.payload.tempId 
-          ? action.payload.savedTodo // ← replace with real(data->(server response)= in dispatch savedTodo)/← replace with real
-          : todo)),
+        todoList: state.todoList.map((todo) =>
+          todo.id === action.payload.tempId
+            ? action.payload.savedTodo // ← replace with real(data->(server response)= in dispatch savedTodo)/← replace with real
+            : todo,
+        ),
       };
+
     // setTodoList((previous) => previous.filter((todo) => todo.id !== newTodo.id),);
     // setError(error.message);
     case TODO_ACTIONS.ADD_TODO_ERROR:
       return {
         ...state,
-        todoList: state.todoList.filter((todo)=> (todo.id !== action.payload.tempId)),
-        error: action.payload.error
+        todoList: state.todoList.filter(
+          (todo) => todo.id !== action.payload.tempId,
+        ),
+        error: action.payload.error,
       };
+
     //COMPLETE
     //   setTodoList((previous) => previous.map((todo) => (todo.id === id ? updatedTodo : todo)),);
     case TODO_ACTIONS.COMPLETE_TODO_START:
       return {
         ...state,
-        todoList: state.todoList.map((todo)=> (todo.id === action.payload.id ? action.payload.updatedTodo: todo))
+        todoList: state.todoList.map((todo) =>
+          todo.id === action.payload.id ? action.payload.updatedTodo : todo,
+        ),
       };
+
     // setTodoList((previous) => previous.map((todo) => (todo.id === id ? originalTodo : todo)),);
     //  invalidateCache();
-        // invalidateCache is defined up here:
-          // const invalidateCache = useCallback(() => {
-          //     setDataVersion((prev) => prev + 1)  // ← dataVersion is HERE!
-          // }, [])
+    // invalidateCache is defined up here:
+    // const invalidateCache = useCallback(() => {
+    //     setDataVersion((prev) => prev + 1)  // ← dataVersion is HERE!
+    // }, [])
     case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
       return {
         ...state,
-           dataVersion: state.dataVersion + 1 // ADD 1 to current value
+        dataVersion: state.dataVersion + 1, // ADD 1 to current value
       };
+
     // setTodoList((previous) => previous.map((todo) => (todo.id === id ? originalTodo : todo)),);
     // setError(error.message);
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
       return {
         ...state,
-        todoList: state.todoList.map((todo)=> (todo.id === action.payload.id 
-          ? action.payload.originalTodo //rollback → go BACK to original! isCompleted: false again
-          : todo)),
-        error: action.payload.error
+        todoList: state.todoList.map((todo) =>
+          todo.id === action.payload.id
+            ? action.payload.originalTodo //rollback → go BACK to original! isCompleted: false again
+            : todo,
+        ),
+        error: action.payload.error,
       };
 
     //UPDATE
@@ -164,30 +172,36 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.UPDATE_TODO_START:
       return {
         ...state,
-        todoList: state.todoList.map((todo)=> (todo.id === action.payload.id ? action.payload.updatedTodo : todo))
+        todoList: state.todoList.map((todo) =>
+          todo.id === action.payload.id ? action.payload.updatedTodo : todo,
+        ),
       };
 
     // setTodoList((previous) => previous.map((todo) => todo.id === editedTodo.id ? originalTodo : todo,),);
     // setError("something went wrong");
     //  invalidateCache();
-          // invalidateCache is defined up here:
-          // const invalidateCache = useCallback(() => {
-          //     setDataVersion((prev) => prev + 1)  // ← dataVersion is HERE!
-          // }, [])
+    // invalidateCache is defined up here:
+    // const invalidateCache = useCallback(() => {
+    //     setDataVersion((prev) => prev + 1)  // ← dataVersion is HERE!
+    // }, [])
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
       return {
         ...state,
         // error: action.payload.error,
-        dataVersion: state.dataVersion + 1 // ADD 1 to current value
+        dataVersion: state.dataVersion + 1, // ADD 1 to current value
       };
+
     // setTodoList((previous) => previous.map((todo) => todo.id === editedTodo.id ? originalTodo : todo,),);
     // setError(error.message);
     case TODO_ACTIONS.UPDATE_TODO_ERROR:
       return {
         ...state,
-        todoList: state.todoList.map((todo)=> (todo.id === action.payload.id ? action.payload.originalTodo : todo)),
-        error: action.payload.error
+        todoList: state.todoList.map((todo) =>
+          todo.id === action.payload.id ? action.payload.originalTodo : todo,
+        ),
+        error: action.payload.error,
       };
+
     //UI---
     //SET SORT
     // setSortBy('creationDate')
@@ -195,7 +209,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         sortBy: action.payload.sortBy,
-        sortDirection: action.payload.sortDirection
+        sortDirection: action.payload.sortDirection,
       };
 
     //SET FILTER
@@ -203,32 +217,31 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.SET_FILTER:
       return {
         ...state,
-            filterTerm: action.payload // "" user types different things each time → action.payload //action.payload = value(whatever user types)
+        filterTerm: action.payload, // "" user types different things each time → action.payload //action.payload = value(whatever user types)
       };
 
     //CLEAR ERROR
-      // setFilterError('')
-      // <button onClick={() => setError("")}>Clear error</button>
+    // setFilterError('')
+    // <button onClick={() => setError("")}>Clear error</button>
     case TODO_ACTIONS.CLEAR_ERROR:
       return {
         ...state,
-        filterError: "" , // "always clears to empty, never changes -> → hardcode it"
-        error: "" 
-
+        filterError: "", // "always clears to empty, never changes -> → hardcode it"
+        error: "",
       };
+
     //RESET FILTERS
-    
-      // setFilterTerm('') //Clears the filter term:
-      // setSortBy('creationDate') //Resets sort by: 
-      // setSortDirection('desc') //Resets sort direction: 
-      // setFilterError('') //Clears the filter error: 
+    // setFilterTerm('') //Clears the filter term:
+    // setSortBy('creationDate') //Resets sort by:
+    // setSortDirection('desc') //Resets sort direction:
+    // setFilterError('') //Clears the filter error:
     case TODO_ACTIONS.RESET_FILTERS:
       return {
         ...state,
-        filterTerm: '',
-        sortBy: 'creationDate',
-        sortDirection: 'desc',
-        filterError: ''
+        filterTerm: "",
+        sortBy: "creationDate",
+        sortDirection: "desc",
+        filterError: "",
       };
 
     default:
@@ -236,21 +249,19 @@ export function todoReducer(state, action) {
   }
 }
 
-
 // action.payload — when you need data from outside:
 // javascript// needs data from TodosPage!
 // todoList: action.payload  // ← needs data.tasks from fetch
 // filterTerm: action.payload // ← needs what user typed
 // error: action.payload      // ← needs error message
 
-
 // state.dataVersion + 1 — calculates from existing state:
 // javascript// doesn't need outside data!
-// // just uses what's already in state!
+// just uses what's already in state!
 // dataVersion: state.dataVersion + 1
-// //                ↑
-// //           already know this!
-// //           it's in state!
+//                ↑
+//           already know this!
+//           it's in state!
 
 // action.payload = needs information from OUTSIDE 📨
 //                  "tell me what value to use"
@@ -274,8 +285,8 @@ export function todoReducer(state, action) {
 // dispatch({
 //     payload: "study"
 // })
-// // action.payload = "study"
-// // action.payload.anything = ❌ can't do this!
+// action.payload = "study"
+// action.payload.anything = ❌ can't do this!
 
 // action.payload.filterError = object with properties:
 // javascript// payload is an object
@@ -285,16 +296,14 @@ export function todoReducer(state, action) {
 //         error: ""
 //     }
 // })
-// // action.payload = { filterError: "...", error: "" }
-// // action.payload.filterError = "Error filtering..." ✅
-// // action.payload.error = "" ✅
+// action.payload = { filterError: "...", error: "" }
+// action.payload.filterError = "Error filtering..." ✅
+// action.payload.error = "" ✅
 
-
-
-// Pattern is same for COMPLETE and UPDATE:-> 
-        // START already updated todoList ✅
-        // SUCCESS just needs dataVersion + 1 ✅
-        // no need to touch todoList in SUCCESS!===> no need to update
+// Pattern is same for COMPLETE and UPDATE:->
+// START already updated todoList ✅
+// SUCCESS just needs dataVersion + 1 ✅
+// no need to touch todoList in SUCCESS!===> no need to update
 // START   → todoList changes ✅
 // SUCCESS → only dataVersion + 1 ✅
 // ERROR   → rollback + error message ✅

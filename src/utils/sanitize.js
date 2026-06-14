@@ -1,26 +1,26 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 
 // Example: Sanitize user input using DOMPurify
 export const sanitizeInput = (input) => {
-  if (typeof input !== "string") return ""
-// This prevents crashes if someone passes:
+  if (typeof input !== "string") return "";
+  // This prevents crashes if someone passes:
 
-// null
-// undefined
-// numbers
-// objects
+  // null
+  // undefined
+  // numbers
+  // objects
 
-// It means:
-// 👉 “If input is NOT text, just turn it into empty string safely”
-// So:
-// null → ""
-// undefined → ""
-// 123 → ""
-// {} → ""
+  // It means:
+  // 👉 “If input is NOT text, just turn it into empty string safely”
+  // So:
+  // null → ""
+  // undefined → ""
+  // 123 → ""
+  // {} → ""
 
   return DOMPurify.sanitize(input.trim(), {
     ALLOWED_TAGS: [], // Remove all HTML tags
-    ALLOWED_ATTR: []  // Remove all attributes
+    ALLOWED_ATTR: [], // Remove all attributes
   });
 };
 
@@ -39,8 +39,6 @@ export const sanitizeInput = (input) => {
 // empty value
 // email format
 // etc.
-
-
 
 // Ensure input validation runs before you sanitize the input with DOMPurify.
 // means your final flow should be:
