@@ -27,6 +27,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
+  const [user,setUser] = useState(null)
 
   const login = async function login(email, password) {
     try {
@@ -43,6 +44,11 @@ export function AuthProvider({ children }) {
         setEmail(data.name);
         setToken(data.csrfToken);
 
+         setUser({
+          name: data.name,
+          email: data.email, // only works if backend actually sends it
+        });
+        
         // I create an object with one key: success
         return { success: true }; //login success
       } else {
@@ -129,6 +135,7 @@ const logout = async function logout() {
 
   const value = {
     //data you want to share
+    user,
     email,
     token,
     isAuthenticated: !!token, //"If there is a token, the user is logged in."
@@ -138,7 +145,7 @@ const logout = async function logout() {
     logout,
   };
 
-  
+
 
   // 1. You click logout
   // 2. Browser sends:

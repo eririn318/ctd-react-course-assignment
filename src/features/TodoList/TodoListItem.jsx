@@ -35,7 +35,6 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
       //   }
 // console.log("TODO ITEM:", todo)
         setIsEditing(false)
-
       }
        return(
         <li>
@@ -73,7 +72,6 @@ export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
               onChange = {()=>onCompleteTodo(todo.id)}//complete THIS specific todo-->ex: completeTodo(2) → finds todo where todo.id === 2 → marks it complete
             />
           
-         
         {/* click title → switches to edit mode */}
         <span onClick={() => setIsEditing(true)}>{todo.title}</span>
      
