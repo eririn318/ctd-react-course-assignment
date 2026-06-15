@@ -42,6 +42,7 @@ A full-stack Todo application built with React and Vite. Features user authentic
 ## 📸 Screenshots
 
 Desktop View
+
 ![Desktop View](./src/screenshots/Desktop_mainPage.png)
 ![Desktop View](./src/screenshots/Desktop_loginPage.png)
 ![Desktop View](./src/screenshots/Desktop_aboutPage.png)
@@ -49,6 +50,7 @@ Desktop View
 ![Desktop View](./src/screenshots/Desktop_profilePage.png)
 
 Mobile View
+
 ![Mobile View](./src/screenshots/Mobile_mainPage.png)
 ![Mobile View](./src/screenshots/Mobile_loginPage.png)
 ![Mobile View](./src/screenshots/Mobile_aboutPage.png)
