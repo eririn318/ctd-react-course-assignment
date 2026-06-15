@@ -108,7 +108,7 @@ export default function ProfilePage() {
         <h2 className="text-l font-bold uppercase tracking-wider text-slate-700 mb-5">
           Your Todo Statistics
         </h2>
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div style={{ display: "flex", gap: "1rem" }} className="justify-center sm:justify-start">
           <div style={statBox}>
             <h3>{todoStats.total}</h3>
             <p>Total Tasks</p>
@@ -131,7 +131,7 @@ const statBox = {
   padding: "1rem",
   borderRadius: "8px",
   textAlign: "center",
-  minWidth: "100px",
+  minWidth: "110px",
 };
 
 // Why ProfilePage uses user at all

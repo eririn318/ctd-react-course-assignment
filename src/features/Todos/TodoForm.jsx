@@ -41,7 +41,7 @@ function TodoForm({ onAddTodo }) {
         elementId="todoTitle"
         labelText="Todo: "
         maxLength={20} //for UI limit length
-        placeholder="Todo text"
+        placeholder="Please enter todo list..."
       />
 
       {/* Error message for validation only
@@ -58,8 +58,8 @@ function TodoForm({ onAddTodo }) {
       {error && <p className="text-red-500 text-sm">{error}</p>}
       <button
         type="submit"
-        className="h-9 px-5 font-semibold text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dynamic-touch-target"
-        disabled={!isValidTodoTitle(workingTodoTitle)}
+        className="h-9 sm:px-3 px-1 whitespace-nowrap font-semibold text-xs sm:text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dynamic-touch-target disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={!isValidTodoTitle(workingTodoTitle.trim())}
       >
         Add Todo
       </button>

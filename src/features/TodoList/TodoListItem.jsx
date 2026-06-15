@@ -45,23 +45,25 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
           <>
             {/* // EDIT mode/ shows input with current title
               // user can edit it */}
+               <div className="flex items-center gap-1">
             <TextInputWithLabel
               maxLength={20}
               value={workingTitle} // displays state (connects to state)
               // value without onChange = frozen input ❌ /value={todo.tile} is connect to app.jsx not changeable, workingTitle -> onChange={handleEdit} changeable to user input
               // value + onChange       = working input ✅
               onChange={handleEdit} // updates state
+               className="w-24 sm:w-auto"
             />
 
             <button
-              className="h-9 px-3 text-xs font-bold ml-5 text-slate-500 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl shadow-sm transition-colors cursor-pointer"
+              className="h-9 px-2 sm:px-3 text-xs font-bold ml-5 text-slate-500 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl shadow-sm transition-colors cursor-pointer"
               type="button"
               onClick={handleCancel}
             >
               Cancel
             </button>
             <button
-              className="h-9 px-4 text-xs font-bold ml-1 text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:hover:bg-indigo-600 rounded-xl shadow-sm transition-colors cursor-pointer"
+              className="h-9 px-2 sm:px-3 text-xs font-bold ml-1 text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:hover:bg-indigo-600 rounded-xl shadow-sm transition-colors cursor-pointer"
               type="button"
               onClick={handleUpdate}
               disabled={!isValidTodoTitle(workingTitle)}
@@ -72,6 +74,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             {/* workingTitle = "Buy milk" → isValid = true  → !true = false  → enabled ✅
                 workingTitle = ""         → isValid = false → !false = true  → disabled ✅
                 workingTitle = "  "       → isValid = false → !false = true  → disabled ✅ */}
+                </div>
           </>
         ) : (
           <>

@@ -6,7 +6,7 @@ export default function SortBy({
     onSortDirectionChange})
      {
     return(
-       <div className="flex items-center gap-2">
+       <div className="flex flex-wrap items-center gap-2">
         <label htmlFor="sortBy">Sort By</label>
         <select 
         id="sortBy"
@@ -42,6 +42,7 @@ export default function SortBy({
             <option value="creationDate">Creation Date</option>
             <option value="title">Title</option>
         </select>
+         <div className="flex items-center gap-2 w-full sm:w-auto">
         <label htmlFor="sortDirection">Order</label>
         <select 
         id="sortDirection"
@@ -52,6 +53,7 @@ export default function SortBy({
             <option value="desc">Descending</option>
             <option value="asc">Ascending</option>
         </select>
+        </div>
         </div>
     )
 }
