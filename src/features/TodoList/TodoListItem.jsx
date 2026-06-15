@@ -77,7 +77,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDel
              
 
               <button
-    className="h-9 px-2 sm:px-3 text-xs font-bold text-white bg-red-500 hover:bg-red-600 rounded-xl shadow-sm transition-colors cursor-pointer"
+    className="h-9 px-2 ml-1 sm:px-3 text-xs font-bold text-white bg-red-500 hover:bg-red-600 rounded-xl shadow-sm transition-colors cursor-pointer"
     type="button"
     onClick={() => onDeleteTodo(todo.id)}
   >
