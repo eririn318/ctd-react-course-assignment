@@ -10,6 +10,7 @@ function TodoList({
   sortBy,
   sortDirection,
   searchTerm = "",
+  onDeleteTodo,
 }) {
   const filteredTodoList = useMemo(() => {
     //Optimize TodoList with useMemo
@@ -121,6 +122,7 @@ function TodoList({
                 todo={todo}
                 onCompleteTodo={onCompleteTodo}
                 onUpdateTodo={onUpdateTodo}
+                onDeleteTodo={onDeleteTodo}
               />
             ),
           )}

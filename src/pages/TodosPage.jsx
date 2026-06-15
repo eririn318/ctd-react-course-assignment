@@ -125,6 +125,36 @@ export default function TodosPage() {
     }
   }
 
+  async function deleteTodo(id) {
+    dispatch({
+      type: TODO_ACTIONS.DELETE_TODO_START,
+      payload: { id },
+    });
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: { "X-CSRF-TOKEN": token },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        dispatch({
+          type: TODO_ACTIONS.DELETE_TODO_ERROR,
+          payload: { id },
+        });
+      } else {
+        dispatch({
+          type: TODO_ACTIONS.DELETE_TODO_SUCCESS,
+          payload: { id },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
+        payload: { id, error: error.message },
+      });
+    }
+  }
+
   async function completeTodo(id) {
     const originalTodo = todoList.find((todo) => todo.id === id); // original todo
 
@@ -267,6 +297,33 @@ export default function TodosPage() {
       });
     }
   }
+  //delete todos
+  async function deleteTodo(id) {
+    dispatch({
+      type: TODO_ACTIONS.DELETE_TODO_START,
+      payload: { id },
+    });
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: { "X-CSRF-TOKEN": token },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        dispatch({
+          type: TODO_ACTIONS.DELETE_TODO_ERROR,
+          payload: { id, error: "Failed to delete todo" },
+        });
+      } else {
+        dispatch({ type: TODO_ACTIONS.DELETE_TODO_SUCCESS });
+      }
+    } catch (error) {
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
+        payload: { id, error: error.message },
+      });
+    }
+  }
 
   return (
     <>
@@ -388,6 +445,7 @@ export default function TodosPage() {
             sortBy={sortBy}
             sortDirection={sortDirection}
             searchTerm={searchTerm}
+            onDeleteTodo={deleteTodo}
           />
         )}
       </div>

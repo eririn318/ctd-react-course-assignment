@@ -3,7 +3,7 @@ import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
 import isValidTodoTitle from "../../utils/todoValidation.js";
 import { sanitizeInput } from "../../utils/sanitize.js";
 
-export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo  }) {
   const [isEditing, setIsEditing] = useState(false); // two modes based on isEditing state
   // isEditing = false → shows checkbox + title
   // isEditing = true  → shows text input for editing
@@ -45,7 +45,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
           <>
             {/* // EDIT mode/ shows input with current title
               // user can edit it */}
-               <div className="flex items-center gap-1">
+               <div className="flex flex-wrap items-center gap-2">
             <TextInputWithLabel
               maxLength={20}
               value={workingTitle} // displays state (connects to state)
@@ -54,7 +54,7 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               onChange={handleEdit} // updates state
                className="w-24 sm:w-auto"
             />
-
+<div className="sm:flex-wrap items-center gap-2">
             <button
               className="h-9 px-2 sm:px-3 text-xs font-bold ml-5 text-slate-500 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl shadow-sm transition-colors cursor-pointer"
               type="button"
@@ -74,7 +74,17 @@ export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             {/* workingTitle = "Buy milk" → isValid = true  → !true = false  → enabled ✅
                 workingTitle = ""         → isValid = false → !false = true  → disabled ✅
                 workingTitle = "  "       → isValid = false → !false = true  → disabled ✅ */}
-                </div>
+             
+
+              <button
+    className="h-9 px-2 sm:px-3 text-xs font-bold text-white bg-red-500 hover:bg-red-600 rounded-xl shadow-sm transition-colors cursor-pointer"
+    type="button"
+    onClick={() => onDeleteTodo(todo.id)}
+  >
+    Delete
+  </button>
+     </div>
+     </div>
           </>
         ) : (
           <>
