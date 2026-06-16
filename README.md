@@ -1,12 +1,16 @@
 # ⚡ Todo Workspace
 
-A full-stack Todo application built with React and Vite. Features user authentication, real-time filtering, sorting, and optimistic UI updates for a seamless user experience.
+A Todo application built with React and Vite. Features user authentication, real-time filtering, sorting, and optimistic UI updates for a seamless user experience.
 
 ---
 
 ## 🔗 Live Demo
 
-> Coming soon — deployment in progress
+> [Click here to see live demo](https://ctd-react-course-assignment-git-lesson-11-eriko-kan-s-projects.vercel.app)
+
+## 🔗 Video demonstration Youtube
+
+> [Click here to see Youtube](https://youtu.be/tlJphJ7MmDY)
 
 ---
 
@@ -115,13 +119,13 @@ npm run dev
 
 ## 🔮 Future Improvements
 
-- Deploy with a live demo link
+
 - Add due dates and priority levels to todos
 - Drag and drop reordering
 - Dark mode toggle
 - TypeScript migration for type safety
 - Unit tests with Vitest and React Testing Library
-- Delete button for todos list 
+
 
 ---
 
