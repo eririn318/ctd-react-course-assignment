@@ -27,7 +27,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
-  const [user,setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   const login = async function login(email, password) {
     try {
@@ -39,16 +39,14 @@ export function AuthProvider({ children }) {
       });
       const data = await response.json();
       if (response.status === 200 && data.name && data.csrfToken) {
-        // onSetEmail(data.name)
-        // onSetToken(data.csrfToken)
         setEmail(data.name);
         setToken(data.csrfToken);
 
-         setUser({
+        setUser({
           name: data.name,
           email: data.email, // only works if backend actually sends it
         });
-        
+
         // I create an object with one key: success
         return { success: true }; //login success
       } else {
@@ -68,8 +66,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-
-const logout = async function logout() {
+  const logout = async function logout() {
     // clear state whether success or fail!
     if (!token) {
       // token = "abc123" → logged in ✅
@@ -99,8 +96,6 @@ const logout = async function logout() {
 
       if (response.status === 200) {
         //just check status, if fetch success, /api/users/logoff runs and successfully logout
-        // onSetEmail(data.name)
-        // onSetToken(data.csrfToken)
 
         // clear state ALWAYS
         // token = "abc123" → logged in ✅
@@ -144,8 +139,6 @@ const logout = async function logout() {
     login,
     logout,
   };
-
-
 
   // 1. You click logout
   // 2. Browser sends:

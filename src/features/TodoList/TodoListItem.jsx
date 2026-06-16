@@ -1,95 +1,122 @@
-import {useState} from "react"
-import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx"
-import isValidTodoTitle from "../../utils/todoValidation.js"
+import { useState } from "react";
+import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
+import isValidTodoTitle from "../../utils/todoValidation.js";
+import { sanitizeInput } from "../../utils/sanitize.js";
 
-export default function TodoListItem({todo, onCompleteTodo, onUpdateTodo}){
+export default function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo  }) {
+  const [isEditing, setIsEditing] = useState(false); // two modes based on isEditing state
+  // isEditing = false → shows checkbox + title
+  // isEditing = true  → shows text input for editing
+  const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-    const [isEditing, setIsEditing ] = useState(false)// two modes based on isEditing state
-// isEditing = false → shows checkbox + title
-// isEditing = true  → shows text input for editing
-    const [workingTitle, setWorkingTitle] = useState(todo.title)
+  function handleCancel() {
+    setWorkingTitle(todo.title); //reset to original title
+    setIsEditing(false); //back to view mode (hide input)
+  }
 
-        function handleCancel() {
-        setWorkingTitle(todo.title) //reset to original title
-        setIsEditing(false) //back to view mode (hide input)
-    }
+  function handleEdit(event) {
+    setWorkingTitle(event.target.value);
+  }
 
-      function handleEdit(event) {
-        setWorkingTitle(event.target.value)
-      }
+  function handleUpdate(event) {
+    if (!isEditing) return;
+    event.preventDefault();
+    const trimmedTitle = workingTitle.trim();
+    if (!isValidTodoTitle(trimmedTitle)) return;
 
-      function handleUpdate(event) {
-        if(!isEditing) return
-        event.preventDefault()
-        const trimmedTitle = workingTitle.trim()
-        if (!isValidTodoTitle(trimmedTitle)) return;
-        onUpdateTodo({...todo, title:trimmedTitle}) //copy todo and override title with trimmedTitle
-      // ex:todo = { id:1, title:"Buy milk", isCompleted:false }
-      // workingTitle = "Buy bread"
+    const cleanTitle = sanitizeInput(trimmedTitle); //sanitize user input
+    onUpdateTodo({ ...todo, title: cleanTitle }); //copy todo and override title with trimmedTitle
+    // ex:todo = { id:1, title:"Buy milk", isCompleted:false }
+    // workingTitle = "Buy bread"
 
-      // { ...todo, title: workingTitle }
-      // = {
-      //     id: 1,              // ✅ copied from todo
-      //     title: "Buy bread", // ✅ overridden with workingTitle
-      //     isCompleted: false  // ✅ copied from todo
-      //   }
-// console.log("TODO ITEM:", todo)
-        setIsEditing(false)
-      }
-       return(
-        <li>
-          <form onSubmit={handleUpdate}>
-          {isEditing 
-          ? (<>
-          {/* // EDIT mode/ shows input with current title
+    // { ...todo, title: workingTitle }
+    // = {
+    //     id: 1,              // ✅ copied from todo
+    //     title: "Buy bread", // ✅ overridden with workingTitle
+    //     isCompleted: false  // ✅ copied from todo
+    //   }
+
+    setIsEditing(false);
+  }
+  return (
+    <li>
+      <form onSubmit={handleUpdate}>
+        {isEditing ? (
+          <>
+            {/* // EDIT mode/ shows input with current title
               // user can edit it */}
-            <TextInputWithLabel 
-            value={workingTitle} // displays state (connects to state)
-            // value without onChange = frozen input ❌ /value={todo.tile} is connect to app.jsx not changeable, workingTitle -> onChange={handleEdit} changeable to user input 
-            // value + onChange       = working input ✅
-            onChange={handleEdit} // updates state
-            /> 
-            <button type="button" onClick={handleCancel}>Cancel</button>
-            <button type="button" onClick = {handleUpdate} disabled={!isValidTodoTitle(workingTitle)}>Update</button>
+               <div className="flex flex-wrap items-center gap-2">
+            <TextInputWithLabel
+              maxLength={20}
+              value={workingTitle} // displays state (connects to state)
+              // value without onChange = frozen input ❌ /value={todo.tile} is connect to app.jsx not changeable, workingTitle -> onChange={handleEdit} changeable to user input
+              // value + onChange       = working input ✅
+              onChange={handleEdit} // updates state
+               className="w-24 sm:w-auto"
+            />
+<div className="sm:flex-wrap items-center gap-2">
+            <button
+              className="h-9 px-2 sm:px-3 text-xs font-bold ml-5 text-slate-500 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl shadow-sm transition-colors cursor-pointer"
+              type="button"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              className="h-9 px-2 sm:px-3 text-xs font-bold ml-1 text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:hover:bg-indigo-600 rounded-xl shadow-sm transition-colors cursor-pointer"
+              type="button"
+              onClick={handleUpdate}
+              disabled={!isValidTodoTitle(workingTitle)}
+            >
+              Update
+            </button>
             {/* Pass workingTitle to isValidTodoTitle to disable Save button when input is empty!  */}
             {/* workingTitle = "Buy milk" → isValid = true  → !true = false  → enabled ✅
                 workingTitle = ""         → isValid = false → !false = true  → disabled ✅
                 workingTitle = "  "       → isValid = false → !false = true  → disabled ✅ */}
-            </>
-          )
-          : (
-            <>
+             
+
+              <button
+    className="h-9 px-2 ml-1 sm:px-3 text-xs font-bold text-white bg-red-500 hover:bg-red-600 rounded-xl shadow-sm transition-colors cursor-pointer"
+    type="button"
+    onClick={() => onDeleteTodo(todo.id)}
+  >
+    Delete
+  </button>
+     </div>
+     </div>
+          </>
+        ) : (
+          <>
             {/* connects label to checkbox */}
-          {/* <label htmlFor={`checkbox${todo.id}`}> </label> */}
-           <label htmlFor={`checkbox${todo.id}`}> </label>
+            <label htmlFor={`checkbox${todo.id}`}> </label>
             {/* VIEW mode/checkbox + title */}
-            <input 
-              type="checkbox" 
+            <input
+              type="checkbox"
               id={`checkbox${todo.id}`} // unique id
               checked={todo.isCompleted} // controls checkbox->
               // todo.isCompleted = false → checkbox is unchecked ☐
               // todo.isCompleted = true  → checkbox is checked   ☑
-              onChange = {()=>onCompleteTodo(todo.id)}//complete THIS specific todo-->ex: completeTodo(2) → finds todo where todo.id === 2 → marks it complete
+              onChange={() => onCompleteTodo(todo.id)} //complete THIS specific todo-->ex: completeTodo(2) → finds todo where todo.id === 2 → marks it complete
             />
-          
-        {/* click title → switches to edit mode */}
-        <span onClick={() => setIsEditing(true)}>{todo.title}</span>
-     
-         </>
-         )}
-         </form>
-         </li>
-         
-  )
+
+            {/* click title → switches to edit mode */}
+            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+          </>
+        )}
+      </form>
+    </li>
+  );
 }
 
-{/* <input type="checkbox" checked={todo.isCompleted} />  // ✅ checkbox
-<input type="text"     value={workingTodoTitle} />     // ✅ text input */}
+{
+  /* <input type="checkbox" checked={todo.isCompleted} />  // ✅ checkbox
+<input type="text"     value={workingTodoTitle} />     // ✅ text input */
+}
 
-// type="text"     → value={...}    
-// type="checkbox" → checked={...}  
+// type="text"     → value={...}
+// type="checkbox" → checked={...}
 // type="radio"    → checked={...}
-
 
 // value={workingTodoTitle}   // controls text input ✅
 // checked={todo.isCompleted} // controls checkbox ✅

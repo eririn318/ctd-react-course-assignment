@@ -1,52 +1,70 @@
 // import {useRef, useState} from "react"
-import {useState, useRef} from "react"
-import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx"
-import isValidTodoTitle from "../../utils/todoValidation.js"
+import { useState, useRef } from "react";
+import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
+import isValidTodoTitle from "../../utils/todoValidation.js";
+import { sanitizeInput } from "../../utils/sanitize.js";
 
-function TodoForm({onAddTodo}) {
+function TodoForm({ onAddTodo }) {
+  const inputRef = useRef();
+  const [workingTodoTitle, setWorkingTodoTitle] = useState("");
+  const [error, setError] = useState("");
 
-    const inputRef = useRef();
-    const [workingTodoTitle, setWorkingTodoTitle] = useState("")
+  function handleAddTodo(event) {
+    event.preventDefault();
 
-
-
-    function handleAddTodo(event) {
-     
-        event.preventDefault();
-
-    // const todoTitle = event.target.todoTitle.value.trim()
-
-    if(workingTodoTitle){
-      onAddTodo(workingTodoTitle)  
-    //   event.target.reset(); // clears input
-      setWorkingTodoTitle("")
-      inputRef.current.focus(); // focuses input
-    // .current is where React stores the DOM element after you connect it with ref={inputRef}
+    const trimmedTitle = workingTodoTitle.trim();
+    if (!isValidTodoTitle(trimmedTitle)) {
+      // 1.validation check
+      setError("Please enter a valid title.");
+      return;
     }
-}
+    setError(""); //clear previous error
 
-    return(
-        <form onSubmit={handleAddTodo}>
-            <TextInputWithLabel   ref={inputRef} value={workingTodoTitle}  onChange={(event) => setWorkingTodoTitle(event.target.value)} elementId="todoTitle" labelText="Todo"  />
-            
-            {/* <label htmlFor="todoTitle">Todo</label>
-            <input 
-            // ref={inputRef} 
-            type="text" 
-            name ="todoTitle" 
-            id="todoTitle" 
-            placeholder={"Todo text"} 
-            value={workingTodoTitle} //// controlled — React controls what shows--displays state in input/value ties the input box to React state — whatever is in state is what shows in the input box. This is called a controlled component. 
-            onChange={(event) => setWorkingTodoTitle(event.target.value)} //updates state on user's input type
-            required/> */}
-            <button  
-            type="submit" 
-            disabled={!isValidTodoTitle(workingTodoTitle)}
-            >
-                Add Todo
-            </button>
-        </form>
-    )
+    const cleanTitle = sanitizeInput(trimmedTitle); //2.sanitize after validation (security clean)
+
+    onAddTodo(cleanTitle); //3.save
+    //   event.target.reset(); // clears input
+    setWorkingTodoTitle(""); //reset UI
+    inputRef.current.focus(); // focuses input
+    // .current is where React stores the DOM element after you connect it with ref={inputRef}
+  }
+
+  return (
+    <form
+      onSubmit={handleAddTodo}
+      className="w-full flex flex-col flex-row gap-3"
+    >
+      <TextInputWithLabel
+        ref={inputRef}
+        value={workingTodoTitle}
+        onChange={(event) => setWorkingTodoTitle(event.target.value)}
+        elementId="todoTitle"
+        labelText="Todo: "
+        maxLength={20} //for UI limit length
+        placeholder="Please enter todo list..."
+      />
+
+      {/* Error message for validation only
+              - validation (isValidTodoTitle)
+                → required, empty check, length rule
+              - UI rules (maxLength)
+                → handled by input, not error message
+              - trim()
+                → used before validation */}
+      {/* It does NOT show:
+              maxLength issues (UI already blocks it)
+              sanitize issues (silent security cleanup) */}
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      <button
+        type="submit"
+        className="h-9 sm:px-3 px-1 whitespace-nowrap font-semibold text-xs sm:text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 dynamic-touch-target disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={!isValidTodoTitle(workingTodoTitle.trim())}
+      >
+        Add Todo
+      </button>
+    </form>
+  );
 }
 
 export default TodoForm;
