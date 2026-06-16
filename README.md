@@ -1,6 +1,6 @@
 # ⚡ Todo Workspace
 
-A Todo application built with React and Vite. Features user authentication, real-time filtering, sorting, and optimistic UI updates for a seamless user experience.
+A frontend Todo application built with React and Vite. Features user authentication, real-time filtering, sorting, and optimistic UI updates for a seamless user experience.
 
 ---
 
@@ -82,13 +82,23 @@ cd ctd-lesson1-todo-list
 ```bash
 npm install
 ```
+3. Set up environment variables
 
-3. Start the development server
+```bash
+cp .env.example .env
+```
+
+The `.env` file should contain: 
+```
+VITE_TARGET=https://ctd-learns-node-l42tx.ondigitalocean.app
+```
+
+4. Start the development server
 ```bash
 npm run dev
 ```
 
-4. Open your browser at `http://localhost:3001`
+5. Open your browser at `http://localhost:3001`
 
 ---
 
